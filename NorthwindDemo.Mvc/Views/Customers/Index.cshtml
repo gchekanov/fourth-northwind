@@ -1,0 +1,49 @@
+﻿@model NorthwindDemo.Mvc.Models.PagedResult<CustomerViewModel>
+
+@{
+    ViewData["Title"] = "Customers";
+    var totalPages = (int)Math.Ceiling((double)Model.TotalCount / Model.PageSize);
+}
+
+<h1>Customers</h1>
+
+<form method="get" asp-controller="Customers" asp-action="Index">
+    <input type="text" name="search" value="@ViewData["Search"]" placeholder="Search by name" />
+    <button type="submit">Search</button>
+</form>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Orders Count</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Items)
+        {
+            <tr>
+                <td>@customer.Name</td>
+                <td>@customer.OrderCount</td>
+                <td>
+                    <a asp-controller="Customers" asp-action="Details" asp-route-id="@customer.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (totalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-search="@ViewData["Search"]">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

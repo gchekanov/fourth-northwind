@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "NorthwindDemo.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\NorthwindDemo.Mvc\\NorthwindDemo.Mvc.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

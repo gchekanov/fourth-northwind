@@ -1,0 +1,52 @@
+﻿@model NorthwindDemo.Mvc.Models.CustomerDetailsViewModel
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<h1>@Model.Name</h1>
+
+<a asp-controller="Customers" asp-action="Index">Back to list</a>
+
+@if (Model.Orders == null || !Model.Orders.Any())
+{
+    <p>No orders for this customer.</p>
+}
+else
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Product Count</th>
+                <th>Total Amount</th>
+                <th>Issues</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr class="@(order.HasIssues ? "table-warning" : "")">
+                    <td>@order.Id</td>
+                    <td>@order.ProductCount</td>
+                    <td>@order.TotalAmount.ToString("C")</td>
+                    <td>
+                        @if (order.HasIssues)
+                        {
+                            <ul>
+                                @foreach (var issue in order.Issues)
+                                {
+                                    <li>@issue</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>None</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
